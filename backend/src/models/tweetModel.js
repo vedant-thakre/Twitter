@@ -9,11 +9,14 @@ const tweetSchema = new mongoose.Schema(
             trim: true,
         },
         impressions: {
-            type: Number
+            type: Number,
+            default: 0
         },
         owner: {
             type: mongoose.Schema.Types.ObjectId,
             ref: 'User',
+            required: true,
+
         },
         media: [
             {

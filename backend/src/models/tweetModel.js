@@ -16,7 +16,6 @@ const tweetSchema = new mongoose.Schema(
             type: mongoose.Schema.Types.ObjectId,
             ref: 'User',
             required: true,
-
         },
         media: [
             {
@@ -52,11 +51,6 @@ const tweetSchema = new mongoose.Schema(
             ref: 'Tweet',
             required: false // Only present if this tweet is a reply to another tweet
         },
-        // thread: {
-        //     type: mongoose.Schema.Types.ObjectId,
-        //     ref: 'Thread',
-        //     required: false // Only present if this tweet is part of a thread
-        // },
     },
     {
         timestamps: true

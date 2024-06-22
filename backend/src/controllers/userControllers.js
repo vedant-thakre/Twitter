@@ -64,3 +64,46 @@ export const registerUser = asyncHandler(async (req, res) => {
     .status(201)
     .json(new Response(200, createdUser, "User registered Successfully"));
 });
+
+export const loginUser = asyncHandler(async (req, res) => {
+  const { username, email, password } = req.body;
+
+  if (!username && !email)
+    throw new ErrorHandler(400, "Username or Email is Required");
+
+  const findUser = await User.findOne({
+    $or: [{ username }, { email }],
+  });
+
+  if (!findUser) throw new ErrorHandler(404, "User not Found");
+
+  const isMatch = await findUser.isPasswordCorrect(password);
+
+  if (!isMatch) throw new ErrorHandler(404, "Incorrect Password");
+
+  const { refreshToken, accessToken } = await generateRefreshAndAccessToken(
+    findUser._id
+  );
+
+  // console.log("Tokens", refreshToken, accessToken);
+
+  const loggedInUser = await User.findById(findUser._id).select(
+    "-password -refreshToken "
+  );
+
+  return res
+    .status(200)
+    .cookie("accessToken", accessToken, options)
+    .cookie("refreshToken", refreshToken, options)
+    .json(
+      new Response(
+        200,
+        {
+          user: loggedInUser,
+          accessToken,
+          refreshToken,
+        },
+        "User Login Successfully"
+      )
+    );
+});

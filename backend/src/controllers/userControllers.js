@@ -107,3 +107,25 @@ export const loginUser = asyncHandler(async (req, res) => {
       )
     );
 });
+
+export const logoutUser = asyncHandler(async (req, res) => {
+  const id = req.user._id;
+
+  const user = await User.findByIdAndUpdate(
+    id,
+    {
+      $unset: {
+        refreshToken: 1, // this removes the field from document
+      },
+    },
+    {
+      new: true,
+    }
+  );
+
+  return res
+    .status(200)
+    .clearCookie("accessToken", options)
+    .clearCookie("refreshToken", options)
+    .json(new Response(200, {}, "User Logged Out"));
+});

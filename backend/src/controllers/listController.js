@@ -128,9 +128,3 @@ export const logoutUser = asyncHandler(async (req, res) => {
     .json(new Response(200, {}, "User Logged Out"));
 });
 
-/*
-
-avg = 3.00
-most = 3.78
-best = 2.54
-*/

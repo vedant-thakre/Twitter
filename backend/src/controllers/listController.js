@@ -127,9 +127,3 @@ export const logoutUser = asyncHandler(async (req, res) => {
     .clearCookie("refreshToken", options)
     .json(new Response(200, {}, "User Logged Out"));
 });
-
-// Reporting 12/07/2024
-// Worked on Bug Fixed On Demand Education Page
-// Worked on Owner Create Education Quiz APIs
-// Worked on Owner Education List apis
-// Worked on Owner Education Detail APIs

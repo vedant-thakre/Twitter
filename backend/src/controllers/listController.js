@@ -128,4 +128,3 @@ export const logoutUser = asyncHandler(async (req, res) => {
     .json(new Response(200, {}, "User Logged Out"));
 });
 
-// changes

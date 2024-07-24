@@ -1,11 +1,20 @@
+import mongoose from 'mongoose';
+import { asyncHandler } from "../utils/asyncHandler.js";
+import { ErrorHandler } from "../utils/errorHandler.js";
+import { User } from "../models/userModel.js";
+import { generateRefreshAndAccessToken } from "../utils/tokenGenerate.js";
+import { uploadFile } from "../utils/fileHandler.js";
+import { Response } from "../utils/responseHandler.js";
 
+const options = {
+  httpOnly: true,
+  secure: true,
+};
 
 export const registerUser = asyncHandler(async (req, res) => {
-  const { email, username, fullName, password } = req.body;
+  const { email, username, name, password } = req.body;
 
-  if (
-    [email, username, fullName, password].some((field) => field.trim() === "")
-  ) {
+  if ([email, username, name, password].some((field) => field.trim() === "")) {
     throw new ErrorHandler(400, "All fileds are Required");
   }
 
@@ -16,9 +25,9 @@ export const registerUser = asyncHandler(async (req, res) => {
   if (existedUser) {
     throw new ErrorHandler(409, "User with email or username already exists");
   }
-  //   console.log(req.files); 
+  //   console.log(req.files);
 
-  const avatarLocalPath = req.files?.avatar[0]?.path;
+  const profileImageLocalPath = req.files?.profileImage[0]?.path;
 
   let coverImageLocalPath;
   if (
@@ -29,20 +38,20 @@ export const registerUser = asyncHandler(async (req, res) => {
     coverImageLocalPath = req.files.coverImage[0].path;
   }
 
-  if (!avatarLocalPath) {
-    throw new ErrorHandler(400, "Avatar file is required");
+  if (!profileImageLocalPath) {
+    throw new ErrorHandler(400, "Profile Image file is required");
   }
 
-  const avatar = await uploadFile(avatarLocalPath);
+  const profileImage = await uploadFile(profileImageLocalPath);
   const coverImage = await uploadFile(coverImageLocalPath);
 
-  if (!avatar) {
-    throw new ErrorHandler(400, "Avatar file is required");
+  if (!profileImage) {
+    throw new ErrorHandler(400, "Profile Image file is required");
   }
 
   const user = await User.create({
-    fullName,
-    avatar: avatar.url,
+    name,
+    profileImage: profileImage.url,
     coverImage: coverImage?.url || "",
     email,
     password,

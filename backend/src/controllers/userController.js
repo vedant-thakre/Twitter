@@ -5,6 +5,7 @@ import { User } from "../models/userModel.js";
 import { generateRefreshAndAccessToken } from "../utils/tokenGenerate.js";
 import { uploadFile } from "../utils/fileHandler.js";
 import { Response } from "../utils/responseHandler.js";
+import bcrypt from "bcryptjs";
 
 const options = {
   httpOnly: true,
@@ -86,7 +87,12 @@ export const loginUser = asyncHandler(async (req, res) => {
 
   if (!findUser) throw new ErrorHandler(404, "User not Found");
 
-  const isMatch = await findUser.isPasswordCorrect(password);
+  // Added logs for debugging
+  console.log("Found User:", findUser);
+  console.log("Entered Password:", password);
+
+  // Use bcrypt compare function directly for better debugging
+  const isMatch = await bcrypt.compare(password, findUser.password);
 
   if (!isMatch) throw new ErrorHandler(404, "Incorrect Password");
 
@@ -94,11 +100,7 @@ export const loginUser = asyncHandler(async (req, res) => {
     findUser._id
   );
 
-  // console.log("Tokens", refreshToken, accessToken);
-
-  const loggedInUser = await User.findById(findUser._id).select(
-    "-password -refreshToken "
-  );
+  const loggedInUser = await User.findById(findUser._id).select("-password");
 
   return res
     .status(200)
@@ -112,7 +114,7 @@ export const loginUser = asyncHandler(async (req, res) => {
           accessToken,
           refreshToken,
         },
-        "User Login Successfully"
+        `Welcome back ${findUser?.name}`
       )
     );
 });

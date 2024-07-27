@@ -1,7 +1,7 @@
 import express from "express";
 import { upload } from "../middlewares/multerMiddleware.js";
 import { verifyJwt } from "../middlewares/authMiddleware.js";
-import { registerUser, loginUser } from "../controllers/userController.js";
+import { registerUser, loginUser, logoutUser } from "../controllers/userController.js";
 
 const router = express.Router();
 
@@ -23,7 +23,7 @@ router.post(
 router.post("/login", loginUser);
 
 // secured route
-// router.post("/logout", verifyJwt, logoutUser);
+router.post("/logout", verifyJwt, logoutUser);
 // router.post("/refresh-token", refreshAccessToken);
 // router.post("/change-password", verifyJwt, changePassword);
 // router.get("/profile", verifyJwt, getUserDetails);

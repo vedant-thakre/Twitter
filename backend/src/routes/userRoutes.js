@@ -2,6 +2,7 @@ import express from "express";
 import { upload } from "../middlewares/multerMiddleware.js";
 import { verifyJwt } from "../middlewares/authMiddleware.js";
 import { registerUser, loginUser, logoutUser } from "../controllers/userController.js";
+import { generateRefreshAndAccessToken } from "../utils/tokenGenerate.js";
 
 const router = express.Router();
 
@@ -24,7 +25,7 @@ router.post("/login", loginUser);
 
 // secured route
 router.post("/logout", verifyJwt, logoutUser);
-// router.post("/refresh-token", refreshAccessToken);
+router.post("/refresh-token", generateRefreshAndAccessToken);
 // router.post("/change-password", verifyJwt, changePassword);
 // router.get("/profile", verifyJwt, getUserDetails);
 // router.patch("/edit-profile", verifyJwt, editUserDetails);

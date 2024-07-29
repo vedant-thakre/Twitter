@@ -27,7 +27,7 @@ router.post("/login", loginUser);
 router.post("/logout", verifyJwt, logoutUser);
 router.post("/refresh-token", generateRefreshAndAccessToken);
 // router.post("/change-password", verifyJwt, changePassword);
-// router.get("/profile", verifyJwt, getUserDetails);
+router.get("/profile", verifyJwt, getUserDetails);
 // router.patch("/edit-profile", verifyJwt, editUserDetails);
 // router.patch("/edit-avatar", verifyJwt, upload.single("avatar"), updateAvatar);
 // router.patch(

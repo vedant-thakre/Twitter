@@ -29,7 +29,7 @@ router.post("/refresh-token", generateRefreshAndAccessToken);
 router.post("/change-password", verifyJwt, changePassword);
 router.get("/profile", verifyJwt, getUserDetails);
 router.patch("/edit-profile", verifyJwt, editUserDetails);
-// router.patch("/edit-avatar", verifyJwt, upload.single("avatar"), updateAvatar);
+router.patch("/edit-avatar", verifyJwt, upload.single("avatar"), updateAvatar);
 // router.patch(
 //   "/edit-cover-image",
 //   verifyJwt,

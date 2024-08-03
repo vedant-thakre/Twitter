@@ -32,7 +32,7 @@ router.patch("/edit-profile", verifyJwt, editUserDetails);
 router.patch("/edit-avatar", verifyJwt, upload.single("avatar"), updateAvatar);
 // router.patch(
 //   "/edit-cover-image",
-//   verifyJwt,
+  verifyJwt,
   upload.single("coverImage"),
 //   updateCoverImage
 // );

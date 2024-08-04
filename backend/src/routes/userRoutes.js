@@ -36,7 +36,7 @@ router.patch("/edit-avatar", verifyJwt, upload.single("avatar"), updateAvatar);
   upload.single("coverImage"),
 //   updateCoverImage
 // );
-// router.get("/channel/:username", verifyJwt, getUserChannelProfile);
+router.get("/channel/:username", verifyJwt, getUserChannelProfile);
 // router.get("/history", verifyJwt, getUserWatchHistory);
 
 // dev routes.

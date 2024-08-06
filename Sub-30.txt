@@ -2,4 +2,6 @@ One Handed Sub-30 Solves:
 
 D2 F' L' F' L' U' L2 F' U B2 R2 B2 U R2 D F2 U F -> 29.
 
-B' R' U2 B2 D' L2 U2 L2 F2 U2 B2 U' L2 D' L B L2 F2 U2 L2 B' -> 28.31 New PB   
+B' R' U2 B2 D' L2 U2 L2 F2 U2 B2 U' L2 D' L B L2 F2 U2 L2 B' -> 28.31 New PB  
+
+U R' F' L F' D2 F2 U2 B2 U' L2 D' L B L2 F2 U2 L2 B' -> 28.31 New PB   
